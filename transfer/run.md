@@ -8,7 +8,9 @@
 se errore:
 
 `ssh-keygen -f ~/.ssh/known_hosts -R login.leonardo.cineca.it`
+on windows per chiara
 
+ssh-keygen -f C:\Users\chiar\.ssh\known_hosts -R login.leonardo.cineca.it
 
 
 
