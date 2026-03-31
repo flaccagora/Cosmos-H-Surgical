@@ -1,3 +1,17 @@
+# How to login
+
+`step ssh login matteo.nunziante@gmail.com --provisioner cineca-hpc`
+
+
+`ssh leonardo` or `ssh cvaga000@login.leonardo.cineca.it`
+
+se errore:
+
+`ssh-keygen -f ~/.ssh/known_hosts -R login.leonardo.cineca.it`
+
+
+
+
 ### Had to modify
 
 - [checkpoint_db.py](../transfer/cosmos_transfer2/_src/imaginaire/utils/checkpoint_db.py) COSMOS_HF_NO_DOWNLOAD=1 see [troubleshooting.md](./docs/troubleshooting.md)
