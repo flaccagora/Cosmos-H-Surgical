@@ -1,10 +1,10 @@
-
 #!/bin/bash
 
 USERNAME=${USER}
 WORKDIR="/leonardo_work/IscrC_FLAC_0"
-UV_CACHE_DIR="/leonardo_work/IscrC_FLAC_0/.uv"
-HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS"
+export UV_CACHE_DIR="/leonardo_work/IscrC_FLAC_0/.uv"
+export HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS"
+
 
 echo "Username: $USERNAME"
 echo "Working directory: $WORKDIR"
@@ -33,8 +33,16 @@ uv sync --extra=cu128
 echo "Removing all previous Hugging Face downloads to ensure a clean setup"
 rm -rf $HF_HOME/*
 
+# check hf auth if needed
+if [ "$(hf auth whoami)" = "Not logged in" ]; then
+    echo "Hugging Face token not found. Please set the HF_TOKEN environment variable with your Hugging Face token. Use hf auth login"
+    exit 1
+else
+    echo "Hugging Face token found. Proceeding with model download."
+fi
+
 echo "Downloading the model weights using Hugging Face"
 source .venv/bin/activate
 python3 hf_download.py --groups cosmos_h_surgical_transfer
 
-echo "Setup complete. You can now run the Inference script or run inference interactively"
+echo "Setup complete. You can now run the Inference script (Cosmos-H-Surgical/transfer/inference.sh) or run inference interactively"
