@@ -300,12 +300,51 @@ GROUPS: dict[str, dict] = {
             FileEntry(
                 repo_id="nvidia/Cosmos-Predict2.5-2B",
                 filename="tokenizer.pth",
-                revision="6787e176dce74a101d922174a95dba29fa5f0c55",
+                # revision="6787e176dce74a101d922174a95dba29fa5f0c55",
+                revision="f176dc95b4a70f53ce01c4b302851595e7322b00",
                 description="Wan2.1 VAE tokenizer checkpoint (registered as Wan2.1/vae)",
             ),
             SnapshotEntry(
                 repo_id="google/siglip2-so400m-patch16-naflex",
                 description="SigLIP2 vision encoder required by Transfer2 image context network",
+            ),
+            SnapshotEntry(
+                repo_id="google-t5/t5-11b",
+                revision="90f37703b3334dfe9d2b009bfcbfbf1ac9d28ea3",
+                ignore_patterns=["tf_model.h5"],
+                description="T5-11B text encoder used for prompt embeddings",
+            ),
+            SnapshotEntry(
+                repo_id="nvidia/Cosmos-Guardrail1",
+                revision="d6d4bfa899a71454a700907664f3e88f503950cf",
+                description="Cosmos-Guardrail1 safety model (video safety filter)",
+            ),
+            SnapshotEntry(
+                repo_id="Qwen/Qwen3Guard-Gen-0.6B",
+                description="Qwen3Guard text safety model",
+                gated=True,
+            ),
+            SnapshotEntry(
+                repo_id="google/siglip-so400m-patch14-384",
+                description="SigLIP vision encoder for video safety filter",
+            ),
+            SnapshotEntry(
+                repo_id="facebook/sam2-hiera-large",
+                description="SAM2 Hiera-Large video segmentation (auto seg controls)",
+            ),
+            SnapshotEntry(
+                repo_id="IDEA-Research/grounding-dino-base",
+                description="GroundingDINO-Base text-conditioned object detection (SAM2 prompts)",
+            ),
+            FileEntry(
+                repo_id="depth-anything/Video-Depth-Anything-Small",
+                filename="video_depth_anything_vits.pth",
+                description="Video-Depth-Anything Small (ViT-S) weights for auto depth controls",
+            ),
+            FileEntry(
+                repo_id="depth-anything/Video-Depth-Anything-Large",
+                filename="video_depth_anything_vitl.pth",
+                description="Video-Depth-Anything Large (ViT-L) weights for auto depth controls",
             ),
         ],
     },
@@ -546,19 +585,9 @@ def main() -> int:
         ╔══════════════════════════════════════════════════════════════════════╗
         ║  To use the downloaded models on an offline HPC cluster:             ║
         ╠══════════════════════════════════════════════════════════════════════╣
+        ║ files downloaded to                                                  ║
+        ║               {cache_dir}                                            ║
         ║                                                                      ║
-        ║  # 1. Transfer the cache to the cluster (run on this machine):       ║
-        ║  rsync -avP \\                                                       ║
-        ║      {cache_dir}/ \\                                                 ║
-        ║      hpc-login:/shared_fs/hf_cache/                                  ║
-        ║                                                                      ║
-        ║  # 2. Set these env vars in your job script / ~/.bashrc on cluster:  ║
-        ║  export HF_HOME=/shared_fs/hf_cache                                  ║
-        ║  export HF_HUB_CACHE=$HF_HOME/hub                                    ║
-        ║  export TRANSFORMERS_CACHE=$HF_HOME/hub                              ║
-        ║  export COSMOS_CACHE_DIR=$HF_HOME                                    ║
-        ║  export HF_HUB_OFFLINE=1                                             ║
-        ║  export TRANSFORMERS_OFFLINE=1                                       ║
         ╚══════════════════════════════════════════════════════════════════════╝
         """)
     )
