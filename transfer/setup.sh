@@ -3,6 +3,8 @@
 
 USERNAME=${USER}
 WORKDIR="/leonardo_work/IscrC_FLAC_0"
+UV_CACHE_DIR="/leonardo_work/IscrC_FLAC_0/.uv"
+HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS"
 
 echo "Username: $USERNAME"
 echo "Working directory: $WORKDIR"
@@ -30,7 +32,9 @@ uv sync --extra=cu128
 
 echo "Removing all previous Hugging Face downloads to ensure a clean setup"
 rm -rf $HF_HOME/*
+
 echo "Downloading the model weights using Hugging Face"
-uv run hf_download.py --groups cosmos_h_surgical_transfer
+source .venv/bin/activate
+python3 hf_download.py --groups cosmos_h_surgical_transfer
 
 echo "Setup complete. You can now run the Inference script or run inference interactively"
