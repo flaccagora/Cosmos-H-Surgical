@@ -346,6 +346,17 @@ GROUPS: dict[str, dict] = {
                 filename="video_depth_anything_vitl.pth",
                 description="Video-Depth-Anything Large (ViT-L) weights for auto depth controls",
             ),
+            SnapshotEntry(
+                repo_id="nvidia/Cosmos-Reason1-7B",
+                revision="3210bec0495fdc7a8d3dbb8d58da5711eab4b423",
+                description="Cosmos-Reason1-7B (includes Qwen2.5-VL-7B tokenizer/processor)",
+            ),
+            SnapshotEntry(
+                repo_id="Qwen/Qwen2.5-VL-7B-Instruct",
+                description="Qwen2.5-VL-7B-Instruct processor (used directly by some inference paths)",
+                gated=True,
+            ),
+
         ],
     },
     # ------------------------------------------------------------------
