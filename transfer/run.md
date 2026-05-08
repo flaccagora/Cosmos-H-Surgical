@@ -110,7 +110,7 @@ source .venv/bin/activate
 Set runtime environment variables:
 
 ```shell
-export HF_HOME=/leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS
+export HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS" 
 export HF_HUB_OFFLINE=1
 export COSMOS_HF_NO_DOWNLOAD=1
 ```
