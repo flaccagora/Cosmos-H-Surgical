@@ -95,7 +95,7 @@ Run the Singularity container:
 singularity exec --nv \
 	--bind .:/workspace \
 	--bind $HOME/.cache:/root/.cache \
-	--bind /leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS:/leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS \
+	--bind $HF_HOME:$HF_HOME \
 	cosmos-h.sif /bin/bash
 ```
 

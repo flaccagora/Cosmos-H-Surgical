@@ -6,9 +6,10 @@
 #SBATCH --ntasks-per-node=8  # 4 tasks out of 32
 #SBATCH --mem=64000          # memory per node out of 494000MB (481GB)
 #SBATCH --gres=gpu:1
+#SBATCH --qos=boost_usr_dbg
 #SBATCH --job-name=cosmos-h-inference
-#SBATCH --output=inference.out
-#SBATCH --error=inference.err
+#SBATCH --output=inference_output/inference_%j.out
+#SBATCH --error=inference_output/inference_%j.err
 
 date
 WORKDIR="/leonardo_work/IscrC_FLAC_0/Cosmos-H-Surgical/transfer"
@@ -34,6 +35,7 @@ singularity exec --nv --bind .:/workspace \
     --bind $HOME/.cache:/root/.cache \
     --bind $HF_HOME:$HF_HOME \
     cosmos-h.sif /bin/bash -c "$CONTAINER_CMD"
+
 
 
 date

@@ -29,20 +29,40 @@ cp /leonardo/pub/userexternal/mnunzian/cosmos-h.sif .
 
 echo "Setting up python environment"
 uv sync --extra=cu128
+source .venv/bin/activate
 
 echo "Removing all previous Hugging Face downloads to ensure a clean setup"
 rm -rf $HF_HOME/*
 
 # check hf auth if needed
-if [ "$(hf auth whoami)" = "Not logged in" ]; then
-    echo "Hugging Face token not found. Please set the HF_TOKEN environment variable with your Hugging Face token. Use hf auth login"
-    exit 1
+if command -v hf >/dev/null 2>&1; then
+    echo "Checking Hugging Face authentication..."
+    if hf auth whoami >/dev/null 2>&1; then
+        echo "Hugging Face already authenticated: $(hf auth whoami)"
+    else
+        if [ -n "$HF_TOKEN" ]; then
+            echo "HF_TOKEN found in environment — logging in using token..."
+            hf auth login --token "$HF_TOKEN"
+        else
+            echo "Hugging Face not authenticated. You will be prompted to log in now."
+            echo "If you prefer a non-interactive login, set the HF_TOKEN environment variable and re-run this script."
+            hf auth login
+        fi
+
+        # verify login succeeded
+        if hf auth whoami >/dev/null 2>&1; then
+            echo "Hugging Face authentication successful: $(hf auth whoami)"
+        else
+            echo "Hugging Face authentication failed. Exiting."
+            exit 1
+        fi
+    fi
 else
-    echo "Hugging Face token found. Proceeding with model download."
+    echo "'hf' CLI not found. Install the Hugging Face CLI (e.g. 'pip install huggingface_hub') or ensure 'hf' is on PATH."
+    exit 1
 fi
 
 echo "Downloading the model weights using Hugging Face"
-source .venv/bin/activate
 python3 hf_download.py --groups cosmos_h_surgical_transfer
 
 echo "Setup complete. You can now run the Inference script (Cosmos-H-Surgical/transfer/inference.sh) or run inference interactively"
