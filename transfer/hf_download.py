@@ -126,7 +126,7 @@ GROUPS: dict[str, dict] = {
             FileEntry(
                 repo_id="nvidia/Cosmos-Predict2.5-2B",
                 filename="tokenizer.pth",
-                revision="6787e176dce74a101d922174a95dba29fa5f0c55",
+                revision="f176dc95b4a70f53ce01c4b302851595e7322b00",
                 description="Cosmos Wan2.1 VAE tokenizer",
             ),
             SnapshotEntry(
@@ -300,7 +300,6 @@ GROUPS: dict[str, dict] = {
             FileEntry(
                 repo_id="nvidia/Cosmos-Predict2.5-2B",
                 filename="tokenizer.pth",
-                # revision="6787e176dce74a101d922174a95dba29fa5f0c55",
                 revision="f176dc95b4a70f53ce01c4b302851595e7322b00",
                 description="Wan2.1 VAE tokenizer checkpoint (registered as Wan2.1/vae)",
             ),

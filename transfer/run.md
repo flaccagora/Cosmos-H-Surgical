@@ -105,6 +105,16 @@ Activate the environment inside the container:
 source .venv/bin/activate
 ```
 
+```bash
+export HF_HOME=/leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS
+export HF_HUB_CACHE=\$HF_HOME/hub
+export TRANSFORMERS_CACHE=\$HF_HOME/hub
+export COSMOS_CACHE_DIR=\$HF_HOME
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+export COSMOS_HF_NO_DOWNLOAD=1
+```
+
 ## Run inference
 
 Set runtime environment variables:
