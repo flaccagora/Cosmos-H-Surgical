@@ -12,11 +12,11 @@
 #SBATCH --error=inference_output/inference_%j.err
 
 date
-WORKDIR="/leonardo_work/IscrC_FLAC_0/Cosmos-H-Surgical/transfer"
+WORKDIR="/leonardo_work/IscrC_FLAC/Cosmos-H-Surgical/transfer"
 USERNAME=${USER}
+export HF_HOME="/leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS"
 export HF_HUB_OFFLINE=1
 export COSMOS_HF_NO_DOWNLOAD=1
-export HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS"
 
 echo "Loading necessary modules"
 ml purge
@@ -26,7 +26,7 @@ echo "Working directory: $WORKDIR"
 cd $WORKDIR
 
 ENV_COMMAND="source .venv/bin/activate"
-PYTHON_CMD="python examples/inference.py -i assets/coagulation_example/depth/coagulation_depth_spec.json -o outputs/depth"
+PYTHON_CMD="python examples/inference.py -i assets/my_example/edge/myexample_edge_spec.json -o outputs/myexample/edge"
 CONTAINER_CMD="$ENV_COMMAND && $PYTHON_CMD"
 echo "Container command: $CONTAINER_CMD"
 
