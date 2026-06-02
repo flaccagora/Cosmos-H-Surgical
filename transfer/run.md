@@ -137,6 +137,10 @@ Edge example:
 python examples/inference.py -i assets/coagulation_example/edge/coagulation_edge_spec.json -o outputs/edge
 ```
 
+```shell
+python examples/inference.py -i assets/my_example/edge/myexample_edge_spec.json -o outputs/myexample/edge
+```
+
 ## Setup Script
 use the setup script `/leonardo_work/IscrC_FLAC_0/setup.sh` to initialize project:
 `bash setup.sh`
