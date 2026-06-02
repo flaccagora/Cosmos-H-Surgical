@@ -13,12 +13,12 @@
 #SBATCH --error=inference_output/inference_%j.err
 
 date
-WORKDIR="/leonardo_work/IscrC_FLAC_0/Cosmos-H-Surgical/transfer"
+WORKDIR="/leonardo_work/IscrC_FLAC/Cosmos-H-Surgical/transfer"
 USERNAME=${USER}
+export HF_HOME="/leonardo_scratch/large/userexternal/mnunzian/HF_DOWNLOADS"
 export HF_HUB_OFFLINE=1
 export COSMOS_HF_NO_DOWNLOAD=1
 export OMP_NUM_THREADS=8
-export HF_HOME="/leonardo_work/IscrC_FLAC_0/.HF_DOWNLOADS"
 
 echo "Loading necessary modules"
 ml purge
