@@ -18,6 +18,11 @@ Run inference with example asset:
 python examples/inference.py -i assets/base/coagulation.json -o outputs/base_video2world --inference-type=video2world
 ```
 
+
+```bash
+python examples/inference.py -i assets/my_example/tool_movement.json -o outputs/tool_movement_image2world --inference-type=video2world
+```
+
 To enable multi-GPU inference with 8 GPUs, use [torchrun](https://docs.pytorch.org/docs/stable/elastic/run.html):
 
 ```bash

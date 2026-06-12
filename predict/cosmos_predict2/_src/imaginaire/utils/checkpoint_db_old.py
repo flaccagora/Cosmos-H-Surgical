@@ -79,60 +79,6 @@ from cosmos_predict2._src.imaginaire.utils import log
 _MINIMUM_HF_CLI_VERSION = "1.3.5"
 
 
-def _env_flag(name: str) -> bool:
-    """Return True if environment variable is set to a truthy value."""
-    value = os.environ.get(name)
-    if value is None:
-        return False
-    return value.strip().lower() in {"1", "true", "yes", "on"}
-
-
-def _hf_no_download_enabled() -> bool:
-    """Return True when runtime should avoid any checkpoint downloads."""
-    return _env_flag("COSMOS_HF_NO_DOWNLOAD") or _env_flag("HF_HUB_OFFLINE")
-
-
-def _hf_hub_download_local_only(*, repository: str, revision: str, filename: str) -> str:
-    """Resolve a file from local Hugging Face cache without downloading."""
-    try:
-        from huggingface_hub import hf_hub_download
-    except ImportError as exc:
-        raise RuntimeError(
-            "Local-only checkpoint resolution requires 'huggingface_hub'. "
-            "Install it or unset COSMOS_HF_NO_DOWNLOAD/HF_HUB_OFFLINE."
-        ) from exc
-
-    return hf_hub_download(
-        repo_id=repository,
-        repo_type="model",
-        revision=revision,
-        filename=filename,
-        local_files_only=True,
-    )
-
-
-def _hf_snapshot_download_local_only(
-    *, repository: str, revision: str, allow_patterns: list[str], ignore_patterns: list[str]
-) -> str:
-    """Resolve a repository snapshot from local Hugging Face cache without downloading."""
-    try:
-        from huggingface_hub import snapshot_download
-    except ImportError as exc:
-        raise RuntimeError(
-            "Local-only checkpoint resolution requires 'huggingface_hub'. "
-            "Install it or unset COSMOS_HF_NO_DOWNLOAD/HF_HUB_OFFLINE."
-        ) from exc
-
-    return snapshot_download(
-        repo_id=repository,
-        repo_type="model",
-        revision=revision,
-        allow_patterns=allow_patterns,
-        ignore_patterns=ignore_patterns,
-        local_files_only=True,
-    )
-
-
 def _is_uuid(checkpoint_uri: str) -> bool:
     """Return True if the URI is a UUID."""
     try:
@@ -251,15 +197,6 @@ class CheckpointFileHf(_CheckpointHf):
     @override
     def _download(self) -> str:
         """Download checkpoint and return the local path."""
-        if _hf_no_download_enabled():
-            path = _hf_hub_download_local_only(
-                repository=self.repository,
-                revision=self.revision,
-                filename=self.filename,
-            )
-            assert os.path.exists(path), path
-            return path
-
         cmd_args = [
             self.repository,
             "--repo-type",
@@ -298,18 +235,6 @@ class CheckpointDirHf(_CheckpointHf):
             for patterns in [include, exclude]:
                 for i, pattern in enumerate(patterns):
                     patterns[i] = os.path.join(self.subdirectory, pattern)
-
-        if _hf_no_download_enabled():
-            path = _hf_snapshot_download_local_only(
-                repository=self.repository,
-                revision=self.revision,
-                allow_patterns=include,
-                ignore_patterns=exclude,
-            )
-            if self.subdirectory:
-                path = os.path.join(path, self.subdirectory)
-            assert os.path.exists(path), path
-            return path
 
         cmd_args = [
             self.repository,
