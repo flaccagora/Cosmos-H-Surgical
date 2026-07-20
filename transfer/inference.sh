@@ -26,7 +26,7 @@ echo "Working directory: $WORKDIR"
 cd $WORKDIR
 
 ENV_COMMAND="source .venv/bin/activate"
-PYTHON_CMD="python examples/inference.py -i assets/isaac_frame/edge/isaac_frame_edge_spec.json -o outputs/isaac_frame/edge"
+PYTHON_CMD="python examples/inference.py -i assets/isaac_frame/multicontrol/isaac_frame_multicontrol_spec.json -o outputs/isaac_frame/multicontrol"
 CONTAINER_CMD="$ENV_COMMAND && $PYTHON_CMD"
 echo "Container command: $CONTAINER_CMD"
 
