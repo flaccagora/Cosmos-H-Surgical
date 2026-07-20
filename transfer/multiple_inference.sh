@@ -28,15 +28,17 @@ echo "Working directory: $WORKDIR"
 cd $WORKDIR
 
 ENV_COMMAND="source .venv/bin/activate"
-OUTPUT_DIR="outputs/batch"
-INPUT_1="assets/coagulation_example/depth/coagulation_depth_spec.json"
-INPUT_2="assets/needleGrasping_example/depth/needleGrasping_depth_spec.json"
-INPUT_3="assets/needlePuncture_guided_example/depth/needlePuncture_depth_spec.json"
+OUTPUT_DIR="outputs/isaac_frame"
+INPUT_1="assets/isaac_frame/multicontrol/isaac_frame_multicontrol_spec.json"
+INPUT_2="assets/isaac_frame/depth/isaac_frame_depth_spec.json"
+INPUT_3="assets/isaac_frame/seg/isaac_frame_seg_spec.json"
+INPUT_4="assets/isaac_frame/vis/isaac_frame_vis_spec.json"
 
 CMD_BATCH="torchrun --nproc_per_node=4 examples/inference.py \
     -i $INPUT_1 \
     -i $INPUT_2 \
     -i $INPUT_3 \
+    -i $INPUT_4 \
     -o $OUTPUT_DIR"
 
 CONTAINER_CMD="$ENV_COMMAND && $CMD_BATCH"
